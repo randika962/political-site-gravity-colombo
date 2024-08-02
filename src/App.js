@@ -1,6 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 function App() {
+
+  const [email, setEmail] = useState('');
+  const [contact, setContact] = useState('');
+
+  const handleSubmit = async () => {
+    const response = await fetch('http://localhost:3001/input', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email,
+        contact,
+      }),
+    });
+
+    const result = await response.json();
+    console.log(result);
+  };
+
   return (
     <div className="bg-gray-100">
       <header className="bg-red-500 py-12">
@@ -41,24 +61,39 @@ function App() {
       </section>
 
       <section className="bg-red-500 py-12">
-        <div className="container mx-auto px-4">
-          <div className="flex items-center justify-center">
-            <div className="text-center w-full">
-              <h2 className="text-3xl font-bold text-white mb-4">Join Our Movement</h2>
-              <p className="text-lg text-white mb-8">Help fulfill our promise to Make America Great Again!</p>
-              <div className="flex items-center justify-center">
-                <input type="text" placeholder="Email" className="border border-white px-4 py-2 rounded-md mr-2 focus:outline-none focus:ring focus:ring-blue-300" />
-                <input type="text" placeholder="Your phone" className="border border-white px-4 py-2 rounded-md mr-2 focus:outline-none focus:ring focus:ring-blue-300" />
-                <button className="bg-white text-red-500 px-4 py-2 rounded-md hover:bg-red-100">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                  </svg>
-                </button>
-              </div>
+      <div className="container mx-auto px-4">
+        <div className="flex items-center justify-center">
+          <div className="text-center w-full">
+            <h2 className="text-3xl font-bold text-white mb-4">Join Our Movement</h2>
+            <p className="text-lg text-white mb-8">Help fulfill our promise to Make America Great Again!</p>
+            <div className="flex items-center justify-center">
+              <input
+                type="email"
+                placeholder="Email"
+                className="border border-white px-4 py-2 rounded-md mr-2 focus:outline-none focus:ring focus:ring-blue-300"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <input
+                type="text"
+                placeholder="Your phone"
+                className="border border-white px-4 py-2 rounded-md mr-2 focus:outline-none focus:ring focus:ring-blue-300"
+                value={contact}
+                onChange={(e) => setContact(e.target.value)}
+              />
+              <button
+                className="bg-white text-red-500 px-4 py-2 rounded-md hover:bg-red-100"
+                onClick={handleSubmit}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </button>
             </div>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
       <section className="bg-blue-500 py-12">
         <div className="container mx-auto px-4">
